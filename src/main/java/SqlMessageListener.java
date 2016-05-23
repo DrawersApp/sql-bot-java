@@ -30,7 +30,17 @@ public class SqlMessageListener implements NewMessageListener {
             e.printStackTrace();
         }
         if (message != null && message.contains("select")) {
-            sqlHelper.main(message, publisher, mqttChatMessage, clientId);
+            try {
+                sqlHelper.select(message, publisher, mqttChatMessage, clientId);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else if (message != null) {
+            try {
+                sqlHelper.genericSql(message, publisher, mqttChatMessage, clientId);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
 
     }
